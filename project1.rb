@@ -49,10 +49,10 @@ class Introduction
     # start a loop to get user input for Difficutly and to make sure its right
     loop do
     puts "Would you like to play on [easy], [medium], or [hard] mode?"
-    @input = gets.chomp.downcase
+    @difficulty = gets.chomp.downcase
 
     # save their input as
-    case @input
+    case @difficulty
     when "easy", "e"
         @difficulty = "easy"
         break
@@ -92,7 +92,10 @@ class Player
     puts "Wrong"
 
   end
+<<<<<<< HEAD
 end
+=======
+>>>>>>> refs/remotes/origin/master
 =begin
     w - Create an empty file for writing.
     a - Append to a file.The file is created if it does not exist.
@@ -184,7 +187,10 @@ class Image_keeper
   # run our answer checker program after each loop to track score.
   def randomise
 
-    10.times do
+<<<<<<< HEAD
+=======
+    10.times do {
+>>>>>>> refs/remotes/origin/master
        # set variable to see if it is trent to true or false.
       if rand(1..100) > 50
         @is_trent = true
@@ -193,33 +199,48 @@ class Image_keeper
       end
 
        #now update which two sets of arrays to use.
+<<<<<<< HEAD
+=======
       case @difficulty
+>>>>>>> refs/remotes/origin/master
       when "easy"
         if @is_trent == true
           mainPic = @easy_trent.sample
         else
+<<<<<<< HEAD
           mainPic = @easy_not_trent.sample
+=======
+>>>>>>> refs/remotes/origin/master
         end
 
       when "medium"
         if @is_trent == true
           mainPic = @medium_trent.sample
         else
+<<<<<<< HEAD
           mainPic = @medium_not_trent.sample
+=======
+>>>>>>> refs/remotes/origin/master
         end
 
       when "hard"
         if @is_trent == true
           mainPic = @hard_trent.sample
         else
+<<<<<<< HEAD
           mainPic = @hard_not_trent.sample
+=======
+>>>>>>> refs/remotes/origin/master
         end
       end
 
       # this section prints to screen using our mainPic , chosen above
       # and our amazing catpix gem... grr
 
-      Catpix::print_image mainpic,
+<<<<<<< HEAD
+=======
+      Catpix::print_image @mainPic,
+>>>>>>> refs/remotes/origin/master
         :limit_x => 0.7,
         :limit_y => 0.7,
         :center_x => true,
@@ -230,9 +251,19 @@ class Image_keeper
         print "Is it Trent?"
 
         # answer checking program to track their score.
+<<<<<<< HEAD
         #answer_checker
     end
   end
+=======
+        answer_checker
+    }
+    end
+  end
+
+end
+
+>>>>>>> refs/remotes/origin/master
 
 end
 
