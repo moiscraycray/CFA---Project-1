@@ -88,6 +88,11 @@ class Player
   def score_board
     File.open("leaderboard", 'a+') {|f| f.write(@list) }
   end
+
+  def wrong
+    puts "Wrong"
+
+  end
 =begin
     w - Create an empty file for writing.
     a - Append to a file.The file is created if it does not exist.
@@ -127,24 +132,63 @@ class Image_keeper
   # run our answer checker program after each loop to track score.
   def randomise
 
+    10.times do {
+       # set variable to see if it is trent to true or false.
+      if rand(1..100) > 50
+        @is_trent = true
+      else
+        @is_trent = false
+      end
 
+       #now update which two sets of arrays to use.
+      case difficulty
+      when "easy"
+        if @is_trent == true
+          mainPic = @easy_trent.sample
+        else
+            mainPic = @easy_not_trent.sample
+        end
 
+      when "medium"
+        if @is_trent == true
+          mainPic = @medium_trent.sample
+        else
+            mainPic = @medium_not_trent.sample
+        end
 
+      when "hard"
+        if @is_trent == true
+          mainPic = @hard_trent.sample
+        else
+            mainPic = @hard_not_trent.sample
+        end
+      end
 
-    Catpix::print_image @mainPic,
-      :limit_x => 0.7,
-      :limit_y => 0.7,
-      :center_x => true,
-      :center_y => true,
-      :bg => "white",
-      :bg_fill => true
+      # this section prints to screen using our mainPic , chosen above
+      # and our amazing catpix gem... grr
 
-      print "Is it Trent?"
+      Catpix::print_image @mainPic,
+        :limit_x => 0.7,
+        :limit_y => 0.7,
+        :center_x => true,
+        :center_y => true,
+        :bg => "white",
+        :bg_fill => true
 
-      # answer checking program to track their score.
-      answer_checker
+        print "Is it Trent?"
+
+        # answer checking program to track their score.
+        answer_checker
+    }
     end
   end
+
+end
+
+def random_image(array)
+
+  random_img = rand(10)
+  return array[random_img]
 
 end
 
