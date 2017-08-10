@@ -18,11 +18,10 @@ It will greet the user and welcome to the game.
 =end
 class Introduction
 
-  def initialize(mode)
-    @mode = mode
+  def initialize
   end
 
-  attr_accessor :mode
+  attr_accessor
 
   def begin
     a = Artii::Base.new(:font => 'slant')
@@ -34,6 +33,8 @@ class Introduction
     puts
     puts "By\n\n"
     puts "James, Carmen, Nathan, and Olivia\n\n\n\n"
+    puts " Hello , what is your  name?"
+    user = Player.new(gets.chomp, 0)
   end
 
 
@@ -41,15 +42,16 @@ class Introduction
   def mode
 
     puts "Would you like to play on [easy], [medium], or [hard] mode?"
-    input = gets.chomp.downcase
+    @input = gets.chomp.downcase
+    @choice = Image_keeper.new
 
-    case @mode
+    case @input
       when "easy"
-
+        easy
       when "medium"
-        @random = @medium.sample
+        medium
       when "hard"
-        @random = @hard.sample
+        randomise
       else
         "Error, invalid input"
     end
@@ -58,26 +60,23 @@ class Introduction
 
 end
 
-class Scoring_counter
 
-  def initialize(score)
-    @score = score
-  end
-
-  attr_accessor :score
-
-  def tracker
-
-    @score += 1
-  end
-
-end
 
 class Player
 
-  def initialize(score)
+  def initialize(name, score=0)
+    @name = name
     @score = score
   end
+
+  attr_accessor :name :score
+
+  def tracker
+      @score += 1
+  end
+
+
+
 
   def score_board
     File.open(leaderboard, 'w') {|f| f.write("write your stuff here") }
@@ -105,32 +104,46 @@ class Image_keeper
   end
 
 #Inidividual users will need to change the directory of where the images are stored
-  def feeds_image
+  def keep_files
     @easy_trent = ["//Users/oliviamo/sites/project1/trenteasy1small.jpg",
       "//Users/oliviamo/sites/project1/trenteasy2.jpg",
       "//Users/oliviamo/sites/project1/trenteasy10.jpg"
     ]
     @easy_not_trent = []
+
     @medium_trent = []
     @medium_not_trent = []
+
     @hard_trent = []
     @hard_not_trent = []
   end
 
   def randomise
-    @random = @easy.sample
+    @picture = @easy.sample
     @easy.delete(@random)
+    @is_trent = true
 
   end
 
 
-    Catpix::print_image @random,
+  10.times do
+    vrandom = random(1..2)
+    if vrandom = 1
+      @picture = easy_trent
+    else
+      @picture = easy_not_trent
+    end
+
+    Catpix::print_image @picture,
       :limit_x => 0.7,
       :limit_y => 0.7,
       :center_x => true,
       :center_y => true,
       :bg => "white",
       :bg_fill => true
+
+      trent_or_not
+    end
   end
 
 end
@@ -139,7 +152,16 @@ intro = Introduction.new
 intro.begin
 intro.mode
 
-
-puts "Is this Trent or not? [y/n]"
-input = gets.chomp.downcase
-score = Scoring_counter.new(input)
+def trent_or_not
+  puts "Is this Trent or not? [y/n]"
+  isTrentAnswer = gets.chomp.downcase
+  case isTrentAnswer
+  when  "yes" && @is_trent?
+    user.tracker
+  when  "no" && !@is_trent?
+    user.tracker
+  when "no" && @is_trent?
+    user.wrong
+  when "yes" && !@is_trent?
+    user.wrong
+  end
