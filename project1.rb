@@ -18,8 +18,11 @@ It will greet the user and welcome to the game.
 =end
 class Introduction
 
-  def initialize
+  def initialize(mode)
+    @mode = mode
   end
+
+  attr_accessor :mode
 
   def begin
     a = Artii::Base.new(:font => 'slant')
@@ -31,6 +34,26 @@ class Introduction
     puts
     puts "By\n\n"
     puts "James, Carmen, Nathan, and Olivia\n\n\n\n"
+  end
+
+
+# the player will choose which mode they want to play
+  def mode
+
+    puts "Would you like to play on [easy], [medium], or [hard] mode?"
+    input = gets.chomp.downcase
+
+    case @mode
+      when "easy"
+
+      when "medium"
+        @random = @medium.sample
+      when "hard"
+        @random = @hard.sample
+      else
+        "Error, invalid input"
+    end
+
   end
 
 end
@@ -77,15 +100,31 @@ end
 
 class Image_keeper
 
-  def initialize
+  def initialize(mode)
+    @mode = mode
   end
 
+#Inidividual users will need to change the directory of where the images are stored
   def feeds_image
-    @easy = ["//Users/oliviamo/sites/project1/trenteasy1small.jpg", "string"]
+    @easy_trent = ["//Users/oliviamo/sites/project1/trenteasy1small.jpg",
+      "//Users/oliviamo/sites/project1/trenteasy2.jpg",
+      "//Users/oliviamo/sites/project1/trenteasy10.jpg"
+    ]
+    @easy_not_trent = []
+    @medium_trent = []
+    @medium_not_trent = []
+    @hard_trent = []
+    @hard_not_trent = []
   end
 
   def randomise
-    Catpix::print_image @easy.sample,
+    @random = @easy.sample
+    @easy.delete(@random)
+
+  end
+
+
+    Catpix::print_image @random,
       :limit_x => 0.7,
       :limit_y => 0.7,
       :center_x => true,
@@ -98,6 +137,8 @@ end
 
 intro = Introduction.new
 intro.begin
+intro.mode
+
 
 puts "Is this Trent or not? [y/n]"
 input = gets.chomp.downcase
