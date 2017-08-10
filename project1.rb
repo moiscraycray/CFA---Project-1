@@ -1,11 +1,4 @@
-=begin
 
-require 'artii'
-
-a = Artii::Base.new(:font => 'slant')
-puts a.asciify('Go kill yourself - Louis C.K. 2017')
-
-=end
 
 system("clear")
 
