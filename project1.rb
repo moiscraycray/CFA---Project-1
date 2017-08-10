@@ -41,19 +41,21 @@ class Introduction
 # the player will choose which mode they want to play
   def mode
 
+    loop do
     puts "Would you like to play on [easy], [medium], or [hard] mode?"
     @input = gets.chomp.downcase
     @choice = Image_keeper.new
 
     case @input
-      when "easy"
-        easy
-      when "medium"
-        medium
-      when "hard"
-        randomise
+    when "easy", "e"
+        difficulty = easy
+        break
+      when "medium", "m"
+        difficulty = medium
+      when "hard" , "h"
+        difficulty = hard
       else
-        "Error, invalid input"
+        "Error, invalid input, please choose Easy, Medium or Hard"
     end
 
   end
