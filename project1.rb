@@ -1,7 +1,10 @@
 =begin
+
 require 'artii'
+
 a = Artii::Base.new(:font => 'slant')
 puts a.asciify('Go kill yourself - Louis C.K. 2017')
+
 =end
 
 system("clear")
@@ -22,6 +25,7 @@ class Introduction
 
   # main method for introduction and visual
   def begin
+    system("clear")
     a = Artii::Base.new(:font => 'slant')
     puts
     puts
@@ -36,7 +40,6 @@ class Introduction
     # accepts input and makes a new player class object with their name
     # and a default score of 0.
     user = Player.new(gets.chomp, 0)
-    puts user.name
   end
 
 
@@ -47,7 +50,6 @@ class Introduction
     loop do
     puts "Would you like to play on [easy], [medium], or [hard] mode?"
     @input = gets.chomp.downcase
-
 
     # save their input as
     case @input
@@ -62,14 +64,10 @@ class Introduction
         "Error, invalid input, please choose Easy, Medium or Hard"
     end
 
+
   end
 
-  image_runner = Image_keeper.new
-  image_runner.randomise(@difficulty)
-
 end
-
-
 # class to handle our users, which tracks name and score. and can update and print their score.
 # consider adding terminal-table for printing the leaderboard once we have running
 class Player
@@ -83,19 +81,18 @@ class Player
 
   def tracker
       @score += 1
-      @list << user.score
+      @scoreBoard << user.score
   end
 
   def score_board
-    File.open("leaderboard", 'a+') {|f| f.write(@list) }
+    File.open("leaderboard", 'a+') {|f| f.write(@scoreBoard) }
   end
-
-
 
   def wrong
     puts "Wrong"
 
   end
+end
 =begin
     w - Create an empty file for writing.
     a - Append to a file.The file is created if it does not exist.
@@ -104,7 +101,11 @@ class Player
     a+ - Open a file for reading and appending. The file is created if it does not exist.
 =end
 
+
+
 end
+
+
 
 # class to handle our images,
 class Image_keeper
@@ -167,24 +168,35 @@ class Image_keeper
 
     @hard_trent = [
       open(ENV['HOME']+"sites/project1/trent/hard/trenthard1.jpg"),
-      pen(ENV['HOME']+"sites/project1/trent/hard/trenthard1.jpg"),
-      pen(ENV['HOME']+"sites/project1/trent/hard/trenthard1.jpg"),
-      pen(ENV['HOME']+"sites/project1/trent/hard/trenthard1.jpg"),
-      pen(ENV['HOME']+"sites/project1/trent/hard/trenthard1.jpg"),
-      pen(ENV['HOME']+"sites/project1/trent/hard/trenthard1.jpg"),
-      pen(ENV['HOME']+"sites/project1/trent/hard/trenthard1.jpg"),
-      pen(ENV['HOME']+"sites/project1/trent/hard/trenthard1.jpg"),
-      pen(ENV['HOME']+"sites/project1/trent/hard/trenthard1.jpg"),
-      pen(ENV['HOME']+"sites/project1/trent/hard/trenthard1.jpg"),
+      open(ENV['HOME']+"sites/project1/trent/hard/trenthard1.jpg"),
+      open(ENV['HOME']+"sites/project1/trent/hard/trenthard1.jpg"),
+      open(ENV['HOME']+"sites/project1/trent/hard/trenthard1.jpg"),
+      open(ENV['HOME']+"sites/project1/trent/hard/trenthard1.jpg"),
+      open(ENV['HOME']+"sites/project1/trent/hard/trenthard1.jpg"),
+      open(ENV['HOME']+"sites/project1/trent/hard/trenthard1.jpg"),
+      open(ENV['HOME']+"sites/project1/trent/hard/trenthard1.jpg"),
+      open(ENV['HOME']+"sites/project1/trent/hard/trenthard1.jpg"),
+      open(ENV['HOME']+"sites/project1/trent/hard/trenthard1.jpg")
     ]
-    @hard_not_trent = []
+    @hard_not_trent = [
+      open(ENV['HOME']+"sites/project1/not_trent/hard/nthard1.jpg"),
+      open(ENV['HOME']+"sites/project1/not_trent/hard/nthard2.jpg"),
+      open(ENV['HOME']+"sites/project1/not_trent/hard/nthard3.jpg"),
+      open(ENV['HOME']+"sites/project1/not_trent/hard/nthard4.jpg"),
+      open(ENV['HOME']+"sites/project1/not_trent/hard/nthard5.jpg"),
+      open(ENV['HOME']+"sites/project1/not_trent/hard/nthard6.jpg"),
+      open(ENV['HOME']+"sites/project1/not_trent/hard/nthard7.jpg"),
+      open(ENV['HOME']+"sites/project1/not_trent/hard/nthard8.jpg"),
+      open(ENV['HOME']+"sites/project1/not_trent/hard/nthard9.jpg"),
+      open(ENV['HOME']+"sites/project1/not_trent/hard/nthard10.jpg")
+    ]
   end
 
   # method to randomly select the arrays of pictures.
   # variables :  picture they are looking at = mainPic
-  # first check what difficulty then select the two arrays and then 10 times randomly choose between each
+  # first check what @difficulty then select the two arrays and then 10 times randomly choose between each
   # run our answer checker program after each loop to track score.
-  def randomise(difficulty)
+  def randomise
 
     10.times do
        # set variable to see if it is trent to true or false.
@@ -195,7 +207,7 @@ class Image_keeper
       end
 
        #now update which two sets of arrays to use.
-      case difficulty
+      case @difficulty
       when "easy"
         if @is_trent == true
           mainPic = @easy_trent.sample
@@ -207,21 +219,21 @@ class Image_keeper
         if @is_trent == true
           mainPic = @medium_trent.sample
         else
-            mainPic = @medium_not_trent.sample
+          mainPic = @medium_not_trent.sample
         end
 
       when "hard"
         if @is_trent == true
           mainPic = @hard_trent.sample
         else
-            mainPic = @hard_not_trent.sample
+          mainPic = @hard_not_trent.sample
         end
       end
 
       # this section prints to screen using our mainPic , chosen above
       # and our amazing catpix gem... grr
 
-      Catpix::print_image mainPic,
+      Catpix::print_image mainpic,
         :limit_x => 0.7,
         :limit_y => 0.7,
         :center_x => true,
@@ -232,80 +244,19 @@ class Image_keeper
         print "Is it Trent?"
 
         # answer checking program to track their score.
-        # answer_checker
-
-    end
-  end
-
-  # method to randomly select the arrays of pictures.
-  # variables :  picture they are looking at = mainPic
-  # first check what difficulty then select the two arrays and then 10 times randomly choose between each
-  # run our answer checker program after each loop to track score.
-  def randomise
-
-    10.times do {
-       # set variable to see if it is trent to true or false.
-      if rand(1..100) > 50
-        @is_trent = true
-      else
-        @is_trent = false
-      end
-
-       #now update which two sets of arrays to use.
-      case difficulty
-      when "easy"
-        if @is_trent == true
-          mainPic = @easy_trent.sample
-        else
-            mainPic = @easy_not_trent.sample
-        end
-
-      when "medium"
-        if @is_trent == true
-          mainPic = @medium_trent.sample
-        else
-            mainPic = @medium_not_trent.sample
-        end
-
-      when "hard"
-        if @is_trent == true
-          mainPic = @hard_trent.sample
-        else
-            mainPic = @hard_not_trent.sample
-        end
-      end
-
-      # this section prints to screen using our mainPic , chosen above
-      # and our amazing catpix gem... grr
-
-      Catpix::print_image @mainPic,
-        :limit_x => 0.7,
-        :limit_y => 0.7,
-        :center_x => true,
-        :center_y => true,
-        :bg => "white",
-        :bg_fill => true
-
-        print "Is it Trent?"
-
-        # answer checking program to track their score.
-        # answer_checker
-    }
+        #answer_checker
     end
   end
 
 end
-
-
-end
-intro = Introduction.new
-intro.begin
-intro.mode
 
 
 # def answer_checker
-#   puts "Is this Trent or not? [y/n]"
+#   #
+#   puts "Is this Trent?"
 #   isTrentAnswer = gets.chomp.downcase
+#
+#   # case answer with
 #   case isTrentAnswer
 #   when  "yes" && @is_trent?
 #     user.tracker
@@ -316,3 +267,8 @@ intro.mode
 #   when "yes" && !@is_trent?
 #     user.wrong
 #   end
+
+
+intro = Introduction.new
+intro.begin
+intro.mode
