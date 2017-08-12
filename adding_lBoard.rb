@@ -9,7 +9,7 @@
 system("clear")
 
 require 'artii' #This is one of the gems, ASCII text
-require 'catpix'
+require 'catpix' #this gem is used to draw pixelated images to the screen
 
 
 
@@ -300,7 +300,7 @@ class Player
     puts
     puts
     puts a.asciify('!!Thanks For Playing!!'  )
-    `say "Thanks for Playing, Is That Trent?"`
+    `say "Thanks for Playing, Is Thaat Trent?"`
     `say " or not"`
     puts "Hello"
 

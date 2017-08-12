@@ -184,11 +184,6 @@ class Player
           `say "could you try that again"`
           puts "      Error, invalid input, please choose Easy, Medium or Hard"
       end
-      #build the tension after the player has chosen difficulty
-      `say "three"`
-      `say "two"`
-      `say "one"`
-      `say "go"`
   end
 end
 
@@ -299,6 +294,10 @@ def answer_checker
       puts "                               Yes or No Please"
     end
   end
+  # person = []
+  # person.push(@name)
+  # person.push(@score)
+  # File.open('LeaderBoard.txt', 'a') {|f| f.print (person + " ")}
 end
 
 
@@ -307,14 +306,9 @@ def showScore
   puts
   puts
   puts a.asciify('!!Thanks For Playing!!'  )
-  `say "Thanks for Playing, Is That Trent?"`
+  `say "Thanks for Playing, Is Thaat Trent?"`
   `say " or not"`
   puts
-  # 
-  # person = [@name, @score]
-  #
-  # open('LeaderBoard.txt', 'a') {|f| f.print (person)}
-  # open('LeaderBoard.txt', 'a') {|f| f.print (" ")}
 end
 
 
